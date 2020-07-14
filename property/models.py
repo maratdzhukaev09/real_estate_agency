@@ -1,11 +1,14 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from phonenumber_field.modelfields import PhoneNumberField
+import phonenumbers
 
 
 class Flat(models.Model):
     owner = models.CharField("ФИО владельца", max_length=200)
     owners_phonenumber = models.CharField("Номер владельца", max_length=20)
+    owner_phone_pure = PhoneNumberField("Нормалиованный номер владельца", null=True, blank=True)
     created_at = models.DateTimeField("Когда создано объявление", default=timezone.now, db_index=True)
     liked_by = models.ManyToManyField(User, verbose_name="Кто лайкнул", null=True, blank=True)
     
