@@ -9,7 +9,8 @@ def make_owner_phone_pure(apps, schema_editor):
     for flat in Flat.objects.all():
         phonenumber = phonenumbers.parse(flat.owners_phonenumber, 'RU')
         if phonenumbers.is_valid_number(phonenumber):
-            flat.owner_phone_pure = f"+7{phonenumbers.parse(flat.owners_phonenumber, 'RU').national_number}"
+            national_number = phonenumber.national_number
+            flat.owner_phone_pure = f"+7{national_number}"
             flat.save()
         else:
             flat.owner_phone_pure = None
