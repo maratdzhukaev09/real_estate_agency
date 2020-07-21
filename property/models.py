@@ -31,7 +31,7 @@ class Flat(models.Model):
 class Owner(models.Model):
     name = models.CharField("ФИО владельца", max_length=200, db_index=True)
     phonenumber = models.CharField("Номер владельца", max_length=20, db_index=True)
-    phone_pure = PhoneNumberField("Нормалиованный номер владельца", null=True, blank=True, db_index=True)
+    phone_pure = PhoneNumberField("Нормализованный номер владельца", null=True, blank=True, db_index=True)
 
     flats = models.ManyToManyField("Flat",
                                    blank=True,
