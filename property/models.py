@@ -22,7 +22,7 @@ class Flat(models.Model):
     active = models.BooleanField("Активно-ли объявление", db_index=True)
     construction_year = models.IntegerField("Год постройки здания", null=True, blank=True, db_index=True)
     new_building = models.NullBooleanField("Новостройка", db_index=True)
-    liked_by = models.ManyToManyField(User, verbose_name="Кто лайкнул", blank=True)
+    liked_by = models.ManyToManyField(User, verbose_name="Кто лайкнул", blank=True, related_name='liked_flats')
 
     def __str__(self):
         return f"{self.town}, {self.address} ({self.price}р.)"
@@ -43,8 +43,8 @@ class Owner(models.Model):
 
 
 class Complaint(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Кто пожаловался")
-    flat = models.ForeignKey(Flat, on_delete=models.PROTECT, verbose_name="Квартира, на которую жаловались")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Кто пожаловался", related_name='complaints')
+    flat = models.ForeignKey(Flat, on_delete=models.PROTECT, verbose_name="Квартира, на которую жаловались", related_name='complaints')
     text = models.TextField("Текст жалобы")
 
     def __str__(self):
